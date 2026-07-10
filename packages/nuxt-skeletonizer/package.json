@@ -1,0 +1,90 @@
+{
+  "name": "nuxt-skeletonizer",
+  "version": "0.1.2",
+  "description": "Automatic skeleton UI for Nuxt 4 — turn any component into a layout-preserving skeleton. The Vue/Nuxt equivalent of Flutter Skeletonizer.",
+  "license": "MIT",
+  "author": "CodeCube0",
+  "type": "module",
+  "sideEffects": false,
+  "keywords": [
+    "nuxt",
+    "nuxt-module",
+    "vue",
+    "skeleton",
+    "skeleton-loader",
+    "skeletonizer",
+    "shimmer",
+    "loading",
+    "placeholder",
+    "ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeCube0/nuxt-skeletonizer-release.git"
+  },
+  "homepage": "https://codecube0.github.io/nuxt-skeletonizer-docs/",
+  "bugs": {
+    "url": "https://github.com/CodeCube0/nuxt-skeletonizer-release/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
+    },
+    "./runtime/*": "./dist/runtime/*",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/module.mjs",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/types.d.mts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "prepack": "nuxt-module-build build",
+    "build": "nuxt-module-build build",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev": "TMPDIR=/tmp nuxi dev playground",
+    "dev:build": "TMPDIR=/tmp nuxi build playground",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^4.4.7",
+    "defu": "^6.1.7"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.4.7",
+    "@storybook/vue3-vite": "^10.4.2",
+    "storybook": "^10.4.2",
+    "@nuxt/test-utils": "^4.0.3",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vitest/coverage-v8": "^4.1.8",
+    "@vue/test-utils": "^2.4.11",
+    "happy-dom": "^20.10.1",
+    "nuxt": "^4.4.7",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.8",
+    "vue": "^3.5.35",
+    "vue-tsc": "^3.3.3"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0"
+  }
+}

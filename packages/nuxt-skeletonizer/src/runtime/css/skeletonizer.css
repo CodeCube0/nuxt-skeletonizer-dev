@@ -1,0 +1,119 @@
+/**
+ * nuxt-skeletonizer core stylesheet (SVG renderer).
+ *
+ * Everything is driven by CSS custom properties so themes can be switched at
+ * runtime without re-rendering. The module writes the resolved config onto
+ * :root on the client; the values below are safe SSR defaults.
+ *
+ * The renderer draws a single `<svg>` overlay (auto engine) or an inline `<svg>`
+ * (manual primitives). The shimmer sweep is animated inside the SVG via a
+ * `<linearGradient>` + `<animateTransform>` (no CSS needed); this stylesheet
+ * only carries the theme tokens, the pulse/static tiers and accessibility.
+ */
+
+:root {
+  --sk-base-color: #e5e7eb;
+  --sk-highlight-color: #f8fafc;
+  --sk-dark-base-color: #2a2a2a;
+  --sk-dark-highlight-color: #3a3a3a;
+  --sk-radius: 0.375rem;
+  --sk-opacity: 1;
+  --sk-duration: 1200ms;
+
+  /* Active base/highlight — remapped in dark mode below. */
+  --sk-bg: var(--sk-base-color);
+  --sk-hl: var(--sk-highlight-color);
+}
+
+/* Dark mode: matches `.dark` (default selector) and an explicit data attribute. */
+.dark,
+[data-theme='dark'] {
+  --sk-bg: var(--sk-dark-base-color);
+  --sk-hl: var(--sk-dark-highlight-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-sk-auto-dark] {
+    --sk-bg: var(--sk-dark-base-color);
+    --sk-hl: var(--sk-dark-highlight-color);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Host + overlay (automatic engine)                                   */
+/* ------------------------------------------------------------------ */
+
+.sk-active {
+  cursor: progress;
+}
+
+/* The single overlay layer pinned over the host. */
+.sk-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--sk-opacity);
+}
+
+.sk-overlay > .sk-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+ * While the overlay is active the real content is hidden but kept in layout
+ * (zero CLS). The overlay itself, and any element the author asked to keep
+ * (ignore / keep / shimmer), stay visible.
+ */
+.sk-svg-hidden {
+  visibility: hidden;
+}
+
+.sk-svg-hidden > .sk-overlay,
+.sk-svg-hidden [data-skeleton-ignore],
+.sk-svg-hidden [data-skeleton-keep],
+.sk-svg-hidden [data-skeleton-shimmer] {
+  visibility: visible;
+}
+
+/* ------------------------------------------------------------------ */
+/* SVG element (overlay + inline primitives)                           */
+/* ------------------------------------------------------------------ */
+
+.sk-svg {
+  /* Inline primitives flow like the content they stand in for. */
+  display: inline-block;
+  vertical-align: middle;
+  opacity: var(--sk-opacity);
+}
+
+/* `reduced` tier → opacity pulse on the whole SVG. */
+.sk-svg--pulse {
+  animation: sk-svg-pulse var(--sk-duration) cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes sk-svg-pulse {
+  0%,
+  100% {
+    opacity: var(--sk-opacity);
+  }
+  50% {
+    opacity: calc(var(--sk-opacity) * 0.45);
+  }
+}
+
+/* `sweep` and `static` need no CSS: the sweep is SMIL inside the SVG, and
+   static is just a flat fill. */
+
+/* ------------------------------------------------------------------ */
+/* Accessibility                                                       */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-svg,
+  .sk-svg--pulse {
+    animation: none !important;
+  }
+}
