@@ -524,18 +524,18 @@ actually inside a `<Skeletonizer>` (or that you called `useSkeletonizer().enable
 ## Contributing
 
 ```bash
-git clone https://github.com/CodeCube0/nuxt-skeletonizer
-cd nuxt-skeletonizer
+git clone https://github.com/CodeCube0/nuxt-skeletonizer-dev
+cd nuxt-skeletonizer-dev
 npm install
 npm run build      # build the module
 npm test           # run the unit/integration suite
 npm run test:coverage
 npm run typecheck
-npm run lint
 ```
 
-The package lives in `packages/nuxt-skeletonizer`. Tests use Vitest + Vue Test Utils with
-happy-dom. Please add tests for any new behaviour and keep coverage ≥ 90%.
+Tests use Vitest + Vue Test Utils with happy-dom. Please add tests for any new behaviour and keep
+coverage ≥ 90%. This repo mirrors the library's source only — linting (`eslint`) runs repo-wide
+from the main development monorepo, not standalone here.
 
 ## Roadmap
 
@@ -545,38 +545,69 @@ happy-dom. Please add tests for any new behaviour and keep coverage ≥ 90%.
 
 ## Changelog
 
-### 0.2.0 — SVG-only renderer
+Mirrors [`CHANGELOG.md`](./CHANGELOG.md) (Keep a Changelog format).
 
-- **Single SVG backend.** The multi-backend renderer (DOM / Virtual / Canvas) and all runtime
-  strategy switching were removed. Every host now draws one `<svg>` overlay — bones as `<rect>`,
-  avatars as `<circle>`, with a shared namespaced gradient animated via `<animateTransform>`.
-- **New options:** `renderMode: 'svg'` (read-only), `svgPrecision` (default `1`), `svgSharedGradient`
-  (default `true`).
-- **Removed options:** `renderStrategy`, `autoSwitch`, `fastPathThreshold`, `domBudget`,
-  `viewportOnly`, `viewportLookahead`, `clustering`, `policies`. Removed the `strategy` prop on
-  `<Skeletonizer>`, the `setRenderStrategy`/`addPolicy`/`removePolicy` controls, and the
-  `useVirtualSkeleton` composable (with its `agGridRange`/`tanstackRange`/`primeVueRange` adapters).
-- **API:** `useSkeletonizer().scan()` now returns `{ nodes, svg, cacheHit }`;
-  `useSkeletonPerformance()` gains `blueprint()` (the latest `SvgBlueprint`).
-- `layoutCache` is now `false | 'memory' | 'session'`.
+### 1.0.0 — 2026-07-10
 
-### 0.1.1 — Adaptive engine
+**Changed**
 
-- **Adaptive engine (opt-in):** a layered `SkeletonEngine` with an FPS/CPU performance score,
-  animation-tier auto-degradation (`full → reduced → static`) with hysteresis and shimmer
-  auto-disable, plus a CLS guard.
-- **Layout cache:** layout fingerprint + blueprint cache (`memory`/`session`).
-- **Telemetry & off-threading:** per-stage timings, FPS, memory and cache ratio, with heavy compute
-  offloaded to a Web Worker / `requestIdleCallback`; plus **Explain Mode** and a bottleneck ranking
-  via `useSkeletonPerformance`.
-- All additive — the default config is unchanged.
+- Version bump to `1.0.0` to mark the library's public API as stable — no functional changes to
+  the package since `0.1.2`.
+- `repository`/`bugs` now point to the dev repo
+  (`https://github.com/CodeCube0/nuxt-skeletonizer-dev`), which mirrors the library's source code,
+  instead of the release repo (which only ever contained compiled `dist/` output, not something
+  useful to browse or file issues against).
 
-### 0.1.0
+### 0.1.2 — 2026-07-04
 
-- Initial release: Nuxt 4 module, automatic DOM-scan engine, 10 components, 5 directives,
-  `useSkeletonizer` composable, CSS-variable theming (light/dark/custom/runtime), 5 animations +
-  extensible API, DevTools tab, SSR/hydration safety, and a unit/integration test suite at
-  ≥ 90% coverage.
+**Changed**
+
+- `repository`/`bugs` now point to the release repo
+  (`https://github.com/CodeCube0/nuxt-skeletonizer-release`), which mirrors exactly what gets
+  published, instead of the development monorepo.
+
+### 0.1.1 — 2026-07-04
+
+**Changed**
+
+- `homepage` now points to the published documentation site
+  (`https://codecube0.github.io/nuxt-skeletonizer-docs/`) instead of the GitHub README.
+
+### 0.1.0 — 2026-07-03
+
+**Added**
+
+- Core engine: non-destructive DOM scanning (iterative DFS, leaf-stop), element classification and
+  bone painting via class/inline-style/attribute mutation only — zero layout shift, no hydration
+  mismatch (client-only, post-hydration).
+- `<Skeletonizer>` component, 9 manual `Skeleton*` primitives, `useSkeletonizer()` composable,
+  `useSkeletonFetch`/`useSkeletonLazyFetch`/`useSkeletonAsyncData`/`useSkeletonLazyAsyncData` data
+  composables, `v-skeleton-ignore`/`keep`/`replace`/`union`/`shimmer` directives.
+- Theming via CSS variables, 5 built-in shimmer/pulse animations, dark mode and
+  `prefers-reduced-motion` support.
+- Adaptive enterprise engine (opt-in, off by default): FPS-aware tiering, telemetry, off-thread
+  fingerprint/analysis via a Blob `Worker`, layout-fingerprint cache, animation micro-controller with
+  a CLS guard, and DevTools Explain Mode / bottleneck ranking (`useSkeletonPerformance()`).
+- DevTools tab registration via `devtools:customTabs`.
+
+**Changed**
+
+- **Rendering backend is SVG-only.** The engine renders a single absolutely-positioned `<svg>`
+  overlay (one `<rect>`/`<circle>` per bone, one shared gradient for the shimmer sweep) instead of a
+  `dom`/`virtual`/`canvas` multi-backend architecture. There is no runtime strategy switching and no
+  `SkeletonPlan` abstraction — `renderMode` is a read-only `'svg'` constant kept only for API
+  stability. The previously explored `DomRenderer`/`VirtualRenderer`/`CanvasRenderer`/
+  `MultiBackendManager` and the `virtualization/` subsystem were removed outright, not deprecated.
+- SVG skeleton fidelity hardened: wrapped text now measures real per-line geometry via
+  `Range.getClientRects()` (row-merged) instead of an artificial `100%/90%/75%` width ladder; flex/
+  grid container layout (`display`/`flex-direction`/`justify-content`/`align-items`/gaps) is captured
+  on `ScanOutput.containers` for verification tooling.
+
+**Notes**
+
+- No public API changed across the SVG-only migration — same component/directive names, same
+  `useSkeletonizer()` surface (`scan()` now resolves to `{ nodes, svg, cacheHit }`).
+- No new runtime dependencies were introduced by either change.
 
 ---
 

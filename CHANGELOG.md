@@ -7,6 +7,18 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-07-10
+
+### Changed
+
+- Version bump to `1.0.0` to mark the library's public API as stable — no functional changes to
+  the package since `0.1.2`. All monorepo package versions (root, package, docs app) are now
+  aligned to `1.0.0`.
+- `repository`/`bugs` now point to the dev repo
+  (`https://github.com/CodeCube0/nuxt-skeletonizer-dev`), which mirrors the library's source code,
+  instead of the release repo (which only ever contained compiled `dist/` output, not something
+  useful to browse or file issues against).
+
 ## [0.1.2] - 2026-07-04
 
 ### Changed
