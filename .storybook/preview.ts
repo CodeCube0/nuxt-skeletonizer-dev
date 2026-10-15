@@ -49,10 +49,10 @@ const preview: Preview = {
     docs: {
       description: {
         component:
-          'Layout-preserving skeleton UI for Nuxt 4 — wrap any markup and it becomes an '
+          'Layout-preserving skeleton UI for Nuxt 3.12+ and Nuxt 4 — wrap any markup and it becomes an '
           + 'animated SVG overlay (bones as <rect>, avatars as <circle>) while loading, with '
           + 'zero layout shift. The "SVG Blueprint" story shows the raw generated <svg>.\n\n---\n\n'
-          + '🇮🇹 **Italiano** — Skeleton UI che preserva il layout per Nuxt 4: avvolgi qualsiasi '
+          + '🇮🇹 **Italiano** — Skeleton UI che preserva il layout per Nuxt 3.12+ e Nuxt 4: avvolgi qualsiasi '
           + 'markup e diventa un overlay SVG animato (ossa come <rect>, avatar come <circle>) '
           + 'durante il caricamento, con zero spostamenti di layout. La story "SVG Blueprint" '
           + 'mostra l’<svg> grezzo generato.',

@@ -1,6 +1,6 @@
 # Nuxt Skeletonizer
 
-> Automatic skeleton UI for Nuxt 4 — turn any component into a layout-preserving **SVG** skeleton.
+> Automatic skeleton UI for Nuxt 3.12+ and Nuxt 4 — turn any component into a layout-preserving **SVG** skeleton.
 > The Vue/Nuxt equivalent of Flutter's [Skeletonizer](https://pub.dev/packages/skeletonizer).
 
 [![npm version](https://img.shields.io/npm/v/nuxt-skeletonizer.svg)](https://www.npmjs.com/package/nuxt-skeletonizer)

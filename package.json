@@ -1,7 +1,7 @@
 {
   "name": "nuxt-skeletonizer",
-  "version": "1.0.0",
-  "description": "Automatic skeleton UI for Nuxt 4 — turn any component into a layout-preserving skeleton. The Vue/Nuxt equivalent of Flutter Skeletonizer.",
+  "version": "1.0.1",
+  "description": "Automatic skeleton UI for Nuxt 3.12+ and Nuxt 4 — turn any component into a layout-preserving skeleton. The Vue/Nuxt equivalent of Flutter Skeletonizer.",
   "license": "MIT",
   "author": "CodeCube0",
   "type": "module",

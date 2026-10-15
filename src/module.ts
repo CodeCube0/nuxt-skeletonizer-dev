@@ -80,7 +80,7 @@ export default defineNuxtModule<SkeletonizerModuleOptions>({
     name: 'nuxt-skeletonizer',
     configKey: 'skeletonizer',
     compatibility: {
-      nuxt: '>=3.10.0',
+      nuxt: '>=3.12.0',
     },
   },
   defaults,

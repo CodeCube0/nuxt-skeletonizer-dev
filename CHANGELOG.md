@@ -7,6 +7,15 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-15
+
+### Changed
+
+- Declared Nuxt compatibility narrowed from `>=3.10.0` to `>=3.12.0`. The module was verified on
+  Nuxt 3.12–3.21 and 4.x (production build, SSR render, dev server and typecheck); Nuxt 3.10/3.11
+  fail on their own with current transitive dependencies, so they can no longer be verified.
+  Package description and README now say "Nuxt 3.12+ and Nuxt 4" instead of "Nuxt 4".
+
 ## [1.0.0] - 2026-07-10
 
 ### Changed
